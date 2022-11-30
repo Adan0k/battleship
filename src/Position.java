@@ -31,7 +31,7 @@ public class Position {
 
         if (input.length() == 2 || (input.length() == 3 && input.contains("10"))) {
             String letter = String.valueOf(input.toCharArray()[0]).toUpperCase();
-            int number = Integer.parseInt(String.valueOf(input.toCharArray()[1]));
+            int number = Integer.parseInt(String.valueOf(input.toCharArray()[1])) - 1;
             if (input.length() == 3){
                 number = 9;
             }
