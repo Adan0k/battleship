@@ -141,5 +141,19 @@ public class Player {
         }
         return false;
     }
-    
+    public void attack(Player player){
+        System.out.println("Insert a position to attack. (Ex: B1)");
+        Position position = Position.inputPosition();
+        if (!player.grid[position.getRow()][position.getColumn()].equals(" ")){
+            System.out.println("you missed the turn");
+            return;
+        }
+        if (player.grid[position.getRow()][position.getColumn()].equals("=")){
+            this.enemyGrid[position.getRow()][position.getColumn()] = "X";
+            player.grid[position.getRow()][position.getColumn()] = "X";
+            attack(player);
+        }
+        this.enemyGrid[position.getRow()][position.getColumn()] = "o";
+        player.grid[position.getRow()][position.getColumn()] = "o";
+    }
 }
