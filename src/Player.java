@@ -28,6 +28,10 @@ public class Player {
         return name;
     }
 
+    public boolean isLost() {
+        return lost;
+    }
+
     public void printGrid() {
         System.out.print("      1   2   3   4   5   6   7   8   9   10 \n");
         System.out.print("    |---|---|---|---|---|---|---|---|---|---|\n");
@@ -167,6 +171,8 @@ public class Player {
         }
         this.enemyGrid[position.getRow()][position.getColumn()] = "o";
         player.grid[position.getRow()][position.getColumn()] = "o";
+        printEnemyGrid();
+
     }
     public void verifyShips(){
         for(Ship s : ships){
@@ -181,12 +187,18 @@ public class Player {
             }
         }
     }
-    public boolean verifyPlayerLost(){
+    public void verifyPlayerLost(){
+        int cont = 0;
         for (Ship s : ships){
-            if (!s.getDefeated()){
-                return false;
+            if (s.getDefeated()){
+                if (s.getDefeated()){
+                    cont++;
+                }
             }
         }
-        return true;
+        if (cont == 5){
+            this.lost = true;
+        }
+
     }
 }
