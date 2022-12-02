@@ -24,6 +24,10 @@ public class Player {
         ships.add(new Ship("Destroyer", 2));
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void printGrid() {
         System.out.print("      1   2   3   4   5   6   7   8   9   10 \n");
         System.out.print("    |---|---|---|---|---|---|---|---|---|---|\n");
@@ -81,7 +85,7 @@ public class Player {
             System.out.println("Which direction you wanna put the boat? H - horizontal V - vertical");
             String direction = inputDirection();
 
-            while (verifyIfHasOtherShip(position, direction, s)) {
+            while (verifyIfHasOtherShip(position, direction, s) || verifyIfItFit(position,direction,s)) {
                 System.out.println("The ship does not fit in this position");
                 System.out.println("Where do you wanna put your: " + s.getName() + " Size: " + s.getSize() + " ? (Ex: B1");
                 position = Position.inputPosition();
@@ -97,9 +101,6 @@ public class Player {
 
             }
             if (direction.equals("H")) {
-                if ((position.getRow() + s.getSize()) > 9) {
-                    position.setRow(position.getRow() - (s.getSize() - 10));
-                }
                 for (int i = position.getRow(); i < (s.getSize() + position.getRow()); i++) {
                     grid[i][position.getColumn()] = "=";
                     s.getPositions().add(new Position(i, position.getColumn()));
@@ -120,6 +121,15 @@ public class Player {
         }
         System.out.println(in + " is not a direction");
         return inputDirection();
+    }
+    private boolean verifyIfItFit(Position position,String direction,Ship s){
+        if (direction.equals("H") && position.getRow() + s.getSize() > 10){
+            return true;
+        }
+        if (direction.equals("V") && position.getColumn() + s.getSize() > 10){
+            return true;
+        }
+        return false;
     }
 
     private boolean verifyIfHasOtherShip(Position position, String direction, Ship ship) {
