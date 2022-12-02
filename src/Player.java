@@ -5,13 +5,14 @@ public class Player {
     private String[][] grid = new String[10][10];
     private String[][] enemyGrid = new String[10][10];
     private Queue<Ship> ships = new LinkedList<>();
+    private boolean lost = false;
 
     public Player(String name) {
         this.name = name;
 
         for (int i = 0; i < enemyGrid.length; i++) {
             for (int j = 0; j < enemyGrid[i].length; j++) {
-                enemyGrid[i][j] = " ";
+                grid[i][j] = " ";
                 enemyGrid[i][j] = " ";
             }
         }
@@ -90,7 +91,7 @@ public class Player {
 
             if (direction.equals("V")) {
                 for (int i = position.getColumn(); i < position.getColumn() + s.getSize(); i++) {
-                    enemyGrid[position.getRow()][i] = "=";
+                    grid[position.getRow()][i] = "=";
                     s.getPositions().add(new Position(position.getRow(), i));
                 }
 
@@ -100,7 +101,7 @@ public class Player {
                     position.setRow(position.getRow() - (s.getSize() - 10));
                 }
                 for (int i = position.getRow(); i < (s.getSize() + position.getRow()); i++) {
-                    enemyGrid[i][position.getColumn()] = "=";
+                    grid[i][position.getColumn()] = "=";
                     s.getPositions().add(new Position(i, position.getColumn()));
                 }
             }
@@ -122,19 +123,19 @@ public class Player {
     }
 
     private boolean verifyIfHasOtherShip(Position position, String direction, Ship ship) {
-        if (direction.equals("V") && (position.getColumn() + ship.getSize()) > enemyGrid.length || direction.equals("H") && (position.getRow() + ship.getSize()) > enemyGrid.length){
+        if (direction.equals("V") && (position.getColumn() + ship.getSize()) > grid.length || direction.equals("H") && (position.getRow() + ship.getSize()) > grid.length){
             return true;
         }
         if (direction.equals("V")) {
             for (int i = position.getColumn(); i < position.getColumn() + ship.getSize(); i++) {
-                if (enemyGrid[position.getRow()][i].equals("=")) {
+                if (grid[position.getRow()][i].equals("=")) {
                     return true;
                 }
             }
         }
         if (direction.equals("H")) {
             for (int i = position.getRow(); i < (ship.getSize() + position.getRow()); i++) {
-                if (enemyGrid[i][position.getColumn()].equals("=")) {
+                if (grid[i][position.getColumn()].equals("=")) {
                     return true;
                 }
             }
@@ -142,9 +143,10 @@ public class Player {
         return false;
     }
     public void attack(Player player){
+        printEnemyGrid();
         System.out.println("Insert a position to attack. (Ex: B1)");
         Position position = Position.inputPosition();
-        if (!player.grid[position.getRow()][position.getColumn()].equals(" ")){
+        if (player.grid[position.getRow()][position.getColumn()].equals("X") || player.grid[position.getRow()][position.getColumn()].equals("o")){
             System.out.println("you missed the turn");
             return;
         }
@@ -155,5 +157,26 @@ public class Player {
         }
         this.enemyGrid[position.getRow()][position.getColumn()] = "o";
         player.grid[position.getRow()][position.getColumn()] = "o";
+    }
+    public void verifyShips(){
+        for(Ship s : ships){
+            int count  = 0;
+            for (int i = 0; i > s.getPositions().size(); i++){
+                if (grid[s.getPositions().get(i).getRow()][s.getPositions().get(i).getColumn()].equals("X")){
+                    count++;
+                }
+            }
+            if (count == s.getSize()){
+                s.setDefeated(true);
+            }
+        }
+    }
+    public boolean verifyPlayerLost(){
+        for (Ship s : ships){
+            if (!s.getDefeated()){
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -3,6 +3,7 @@ public class Main {
         Player player = new Player("Adan");
         player.putShips();
         player.printGrid();
+        player.attack(player);
 
     }
 }
