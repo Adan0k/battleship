@@ -55,24 +55,20 @@ public class Game {
             System.out.println(player1.getName() + " are you ready to attack? (type anything to continue)");
             scanner.next();
             player1.attack(player2);
-            player2.verifyShips();
-            player2.verifyPlayerLost();
             if (player2.isLost()){
                 System.out.println("Winner: " + player1.getName());
                 break;
             }
 
-            System.out.println(player1.getName() + " are you ready to attack? (type anything to continue)");
+            System.out.println(player2.getName() + " are you ready to attack? (type anything to continue)");
             scanner.next();
             player2.attack(player1);
-            player1.verifyShips();
-            player1.verifyPlayerLost();
             if (player1.isLost()){
                 System.out.println("Winner: " +  player2.getName());
                 break;
             }
 
-        }while (true);;
+        }while (true);
     }
     public void instructions(){
         System.out.println("This is a game with 2 players, where the players put theirs ships on a grid and try to attack the opponent ships");

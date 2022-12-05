@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class Ship {
     private String name;
     private int size;
-    private Boolean defeated = false;
     private ArrayList<Position> positions = new ArrayList<>();
 
 
@@ -27,15 +26,6 @@ public class Ship {
     public void setSize(int size) {
         this.size = size;
     }
-
-    public Boolean getDefeated() {
-        return defeated;
-    }
-
-    public void setDefeated(Boolean defeated) {
-        this.defeated = defeated;
-    }
-
     public ArrayList<Position> getPositions() {
         return positions;
     }
