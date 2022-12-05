@@ -20,6 +20,10 @@ public class Game {
         System.out.println("0 - exit");
         System.out.println("what you wanna do?");
         int action = scanner.nextInt();
+        while (action < 0 || action > 2){
+            System.out.println("this is not a option");
+            action = scanner.nextInt();
+        }
         while (action != 1 && action != 2 && action != 0){
             System.out.println("the options are only 1,2 or 0");
             action = scanner.nextInt();
@@ -71,6 +75,14 @@ public class Game {
         }while (true);
     }
     public void instructions(){
+        Scanner scanner = new Scanner(System.in);
         System.out.println("This is a game with 2 players, where the players put theirs ships on a grid and try to attack the opponent ships");
+        System.out.println("1 - back");
+        System.out.println("0 - exit");
+        int op = scanner.nextInt();
+        while (op != 0 || op != 1 ){
+            System.out.println("this is not a option");
+            op = scanner.nextInt();
+        }
     }
 }
